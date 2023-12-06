@@ -1,0 +1,6 @@
+<resources>
+    <string name="app_name">Summary-4V2</string>
+    <string name="search">Search</string>
+    <string name="attachment_message">Sent an attachment</string>
+    <string name="voice_message">Sent a voice message</string>
+</resources>
