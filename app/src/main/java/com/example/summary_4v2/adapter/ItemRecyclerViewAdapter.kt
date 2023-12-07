@@ -1,8 +1,5 @@
 package com.example.summary_4v2.adapter
 
-import android.graphics.drawable.Drawable
-import android.graphics.drawable.ShapeDrawable
-import android.graphics.drawable.shapes.OvalShape
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -20,94 +17,80 @@ class ItemRecyclerViewAdapter : ListAdapter<Item, RecyclerView.ViewHolder>(ItemD
 
     inner class ItemMessageViewHolder(private val binding: ItemTextMessageBinding) :
         RecyclerView.ViewHolder(binding.root) {
-        fun bind(item: Item) =
-            with(binding) {
-                val drawable = R.drawable.ic_attach_background
-                Glide.with(itemView.context)
-                    .load(item.image)
-                    .into(ivAccountImage)
-                if (item.image == null || item.image == " ") ivAccountImage.setImageDrawable(
-                    drawable.toDrawable()
-                )
-                tvName.text = item.owner
-                tvMessage.text = item.lastMessage
-                tvTime.text = item.lastActive
-                if (item.unreadMessages < 1) {
-                    unreadMessagesCount.visibility = View.GONE
-                    unreadMessagesCountBackground.visibility = View.GONE
-                } else {
-                    unreadMessagesCount.visibility = View.VISIBLE
-                    unreadMessagesCountBackground.visibility = View.VISIBLE
-                    unreadMessagesCount.text = item.unreadMessages.toString()
-                }
-
-                if (item.isTyping) ivTyping.visibility = View.VISIBLE
+        fun bind(item: Item) = with(binding) {
+            val drawable = R.drawable.ic_launcher_background
+            if (item.image.isNullOrBlank()) {
+                ivAccountImage.setImageDrawable(drawable.toDrawable())
+            } else {
+                Glide.with(itemView.context).load(item.image).into(ivAccountImage)
             }
+            tvName.text = item.owner
+            tvMessage.text = item.lastMessage
+            tvTime.text = item.lastActive
+            if (item.unreadMessages < 1) {
+                unreadMessagesCount.visibility = View.GONE
+                unreadMessagesCountBackground.visibility = View.GONE
+            } else {
+                unreadMessagesCount.visibility = View.VISIBLE
+                unreadMessagesCountBackground.visibility = View.VISIBLE
+                unreadMessagesCount.text = item.unreadMessages.toString()
+            }
+
+            if (item.isTyping) ivTyping.visibility = View.VISIBLE
+        }
     }
 
     inner class ItemVoiceMessageViewHolder(private val binding: ItemVoiceMessageBinding) :
         RecyclerView.ViewHolder(binding.root) {
-        fun bind(item: Item) =
-            with(binding) {
-                val drawable = R.drawable.ic_attach_background
-                Glide.with(itemView.context)
-                    .load(item.image)
-                    .into(ivAccountImage)
-                if (item.image == null || item.image == " ") ivAccountImage.setImageDrawable(
-                    drawable.toDrawable()
-                )
-                tvName.text = item.owner
-                tvTime.text = item.lastActive
-                if (item.isTyping) ivTyping.visibility = View.VISIBLE
+        fun bind(item: Item) = with(binding) {
+            val drawable = R.drawable.ic_launcher_background
+            if (item.image.isNullOrBlank()) {
+                ivAccountImage.setImageDrawable(drawable.toDrawable())
+            } else {
+                Glide.with(itemView.context).load(item.image).into(ivAccountImage)
             }
+            tvName.text = item.owner
+            tvTime.text = item.lastActive
+            if (item.isTyping) ivTyping.visibility = View.VISIBLE
+        }
     }
 
     inner class ItemFileMessageViewHolder(private val binding: ItemFileMessageBinding) :
         RecyclerView.ViewHolder(binding.root) {
-        fun bind(item: Item) =
-            with(binding) {
-                val drawable = R.drawable.ic_attach_background
-                Glide.with(itemView.context)
-                    .load(item.image)
-                    .into(ivAccountImage)
-
-                if (item.image == null || item.image == " ") ivAccountImage.setImageDrawable(
-                    drawable.toDrawable()
-                )
-                tvName.text = item.owner
-                tvTime.text = item.lastActive
-                if (item.isTyping) ivTyping.visibility = View.VISIBLE
+        fun bind(item: Item) = with(binding) {
+            val drawable = R.drawable.ic_launcher_background
+            if (item.image.isNullOrBlank()) {
+                ivAccountImage.setImageDrawable(drawable.toDrawable())
+            } else {
+                Glide.with(itemView.context).load(item.image).into(ivAccountImage)
             }
+            tvName.text = item.owner
+            tvTime.text = item.lastActive
+            if (item.isTyping) ivTyping.visibility = View.VISIBLE
+        }
     }
 
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int) =
-        when (viewType) {
-            MESSAGE -> ItemMessageViewHolder(
-                ItemTextMessageBinding.inflate(
-                    LayoutInflater.from(parent.context),
-                    parent,
-                    false
-                )
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int) = when (viewType) {
+        MESSAGE -> ItemMessageViewHolder(
+            ItemTextMessageBinding.inflate(
+                LayoutInflater.from(parent.context), parent, false
             )
+        )
 
-            VOICE -> ItemVoiceMessageViewHolder(
-                ItemVoiceMessageBinding.inflate(
-                    LayoutInflater.from(parent.context),
-                    parent,
-                    false
-                )
+        VOICE -> ItemVoiceMessageViewHolder(
+            ItemVoiceMessageBinding.inflate(
+                LayoutInflater.from(parent.context), parent, false
             )
+        )
 
-            FILE -> ItemFileMessageViewHolder(
-                ItemFileMessageBinding.inflate(
-                    LayoutInflater.from(parent.context),
-                    parent,
-                    false
-                )
+        FILE -> ItemFileMessageViewHolder(
+            ItemFileMessageBinding.inflate(
+                LayoutInflater.from(parent.context), parent, false
             )
+        )
 
-            else -> throw Exception("Invalid View Type!")
-        }
+        else -> throw Exception("Invalid View Type!")
+    }
 
 
     override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {

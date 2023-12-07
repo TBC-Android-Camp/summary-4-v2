@@ -14,8 +14,7 @@ import kotlinx.coroutines.launch
 import java.io.IOException
 
 class MainViewModel(
-    private val repository: MainRepository =
-        MainRepository(RetrofitInstance.itemApi)
+    private val repository: MainRepository = MainRepository(RetrofitInstance.itemApi)
 ) : ViewModel() {
     private val _itemsFlow = MutableStateFlow<List<Item>>(emptyList())
     var itemsFlow: StateFlow<List<Item>> = _itemsFlow
@@ -24,19 +23,18 @@ class MainViewModel(
         data()
     }
 
-    private fun data() =
-        viewModelScope.launch {
+    private fun data() = viewModelScope.launch {
 
-            when (val result = repository.getItems()) {
-                is ApiResult.Success -> {
-                    _itemsFlow.emit(result.data)
-                }
+        when (val result = repository.getItems()) {
+            is ApiResult.Success -> {
+                _itemsFlow.emit(result.data)
+            }
 
-                is ApiResult.Error -> {
-                    Log.d("testTest", result.message)
-                }
+            is ApiResult.Error -> {
+                Log.d("testTest", result.message)
             }
         }
+    }
 
 
 }

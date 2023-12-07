@@ -1,13 +1,15 @@
 package com.example.summary_4v2.screens.fragments
 
-import androidx.core.widget.doAfterTextChanged
-import androidx.core.widget.doOnTextChanged
+import android.view.View
+import androidx.core.widget.addTextChangedListener
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
 import com.example.summary_4v2.adapter.ItemRecyclerViewAdapter
 import com.example.summary_4v2.base.BaseFragment
 import com.example.summary_4v2.databinding.FragmentMainBinding
 import com.example.summary_4v2.model.MainViewModel
+import com.google.android.material.snackbar.Snackbar
+import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 
 class MainFragment : BaseFragment<FragmentMainBinding>(FragmentMainBinding::inflate) {
@@ -27,28 +29,38 @@ class MainFragment : BaseFragment<FragmentMainBinding>(FragmentMainBinding::infl
         showAllItems()
     }
 
-    private fun setUpRecyclerView() {
-        adapter = ItemRecyclerViewAdapter()
-        binding.recyclerView.adapter = adapter
+    private fun setUpRecyclerView() =
+        with(binding) {
+            adapter = ItemRecyclerViewAdapter()
+            recyclerView.adapter = adapter
+            progressBar.visibility = View.VISIBLE
 
-        viewLifecycleOwner.lifecycleScope.launch {
-            viewModel.itemsFlow.collect { items ->
-                adapter.submitList(items)
+            viewLifecycleOwner.lifecycleScope.launch {
+                delay(1000)
+                viewModel.itemsFlow.collect { items ->
+                    adapter.submitList(items)
+                    progressBar.visibility = View.GONE
+                }
             }
         }
-    }
 
     private fun search() =
         with(binding) {
             val filteredChats = viewModel.itemsFlow.value.filter { item ->
                 item.owner.contains(etSearch.text.toString(), true)
             }
-            adapter.submitList(filteredChats)
+
+            if (filteredChats.isEmpty()) {
+                Snackbar.make(binding.root, "მომხმარებელი არ იქნა ნაპოვნი", Snackbar.LENGTH_LONG)
+                    .show()
+            } else {
+                adapter.submitList(filteredChats)
+            }
         }
 
     private fun showAllItems() =
         with(binding) {
-            etSearch.doAfterTextChanged {
+            etSearch.addTextChangedListener {
                 adapter.submitList(viewModel.itemsFlow.value)
             }
         }

@@ -1,19 +1,19 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="match_parent"
-    android:layout_margin="15dp"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:background="@color/backgroundColor"
-    android:layout_height="wrap_content">
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_margin="15dp"
+    android:background="@color/backgroundColor">
 
     <com.google.android.material.imageview.ShapeableImageView
         android:id="@+id/ivAccountImage"
         android:layout_width="60dp"
         android:layout_height="60dp"
-        app:shapeAppearanceOverlay="@style/circleImageView"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
+        app:shapeAppearanceOverlay="@style/circleImageView"
         tools:src="@drawable/ic_launcher_background" />
 
     <TextView
@@ -32,8 +32,8 @@
         android:id="@+id/imageView2"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:src="@drawable/ic_voice"
         android:layout_marginStart="15dp"
+        android:src="@drawable/ic_voice"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toEndOf="@+id/ivAccountImage"
         app:layout_constraintTop_toBottomOf="@+id/tvName" />
@@ -42,13 +42,13 @@
         android:id="@+id/tvMessage"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        android:text="@string/voice_message"
         android:textColor="@color/grey"
         android:textSize="14sp"
-        android:layout_marginStart="8dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toEndOf="@+id/imageView2"
-        app:layout_constraintTop_toBottomOf="@+id/tvName"
-        android:text="@string/voice_message" />
+        app:layout_constraintTop_toBottomOf="@+id/tvName" />
 
     <TextView
         android:id="@+id/tvTime"

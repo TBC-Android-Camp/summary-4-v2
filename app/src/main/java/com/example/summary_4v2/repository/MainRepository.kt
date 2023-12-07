@@ -5,7 +5,7 @@ import com.example.summary_4v2.network.ApiResult
 import com.example.summary_4v2.network.ItemApi
 import okio.IOException
 
-class MainRepository (private val itemApi: ItemApi) {
+class MainRepository(private val itemApi: ItemApi) {
     suspend fun getItems(): ApiResult<List<Item>> {
         return try {
             val response = itemApi.getItems()
