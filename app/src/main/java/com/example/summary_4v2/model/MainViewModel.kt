@@ -8,10 +8,7 @@ import com.example.summary_4v2.network.RetrofitInstance
 import com.example.summary_4v2.repository.MainRepository
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
-import kotlinx.coroutines.flow.collect
-import kotlinx.coroutines.flow.filter
 import kotlinx.coroutines.launch
-import java.io.IOException
 
 class MainViewModel(
     private val repository: MainRepository = MainRepository(RetrofitInstance.itemApi)

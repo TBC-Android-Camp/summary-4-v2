@@ -3,7 +3,9 @@ package com.example.summary_4v2.screens.fragments
 import android.view.View
 import androidx.core.widget.addTextChangedListener
 import androidx.fragment.app.viewModels
+import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.lifecycleScope
+import androidx.lifecycle.repeatOnLifecycle
 import com.example.summary_4v2.adapter.ItemRecyclerViewAdapter
 import com.example.summary_4v2.base.BaseFragment
 import com.example.summary_4v2.databinding.FragmentMainBinding
@@ -36,10 +38,11 @@ class MainFragment : BaseFragment<FragmentMainBinding>(FragmentMainBinding::infl
             progressBar.visibility = View.VISIBLE
 
             viewLifecycleOwner.lifecycleScope.launch {
-                delay(1000)
-                viewModel.itemsFlow.collect { items ->
-                    adapter.submitList(items)
-                    progressBar.visibility = View.GONE
+                repeatOnLifecycle(Lifecycle.State.STARTED) {
+                    viewModel.itemsFlow.collect { items ->
+                        adapter.submitList(items)
+                        progressBar.visibility = View.GONE
+                    }
                 }
             }
         }
